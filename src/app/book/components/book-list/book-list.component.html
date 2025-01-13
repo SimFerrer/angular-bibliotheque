@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h2 class="card-title h5">{{ book.title }}</h2>
                     <p class="card-text"><strong>Status :</strong> {{ book.status | bookStatusLabel }}</p>
-                    @if(authenticated){
+                    @if(isAuthenticated$ | async){
                     <a [routerLink]="['/catalog', book.id]" class="btn btn-primary mt-3">
                         Voir le détail
                     </a>

@@ -10,7 +10,7 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/catalog">Catalogue</a>
                 </li>
-                @if(!authenticated){
+                @if(!(isAuthenticated$ | async)){
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/login">Connexion</a>
                 </li>

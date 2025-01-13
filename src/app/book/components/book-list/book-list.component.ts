@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BookStatusPipe } from '../../pipes/book-status.pipe';
 import { AuthService } from '../../../auth/services/auth.service';
 import { RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-book-list',
@@ -24,13 +25,13 @@ export class BookListComponent implements OnInit {
 
   books: Book[] = [];
   pagination: Pagination | null = null;
-  authenticated: boolean = false;
+  isAuthenticated$! :Observable<boolean>;
 
   constructor(private bookService: BookService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadBooks();
-    this.authenticated = this.authService.isAuthenticated();
+    this.isAuthenticated$ = this.authService.isAuthenticated();
   }
 
   loadBooks(page: number = 1): void {

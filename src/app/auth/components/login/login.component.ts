@@ -16,19 +16,19 @@ export class LoginComponent {
 
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        localStorage.setItem('access_token', response.token);
-        this.router.navigate(['/']).then(()=>{
-          window.location.reload();
-        });
+        this.router.navigate(['/']);
+        this.errorMessage = '';
       },
       error: (error) => {
         console.error('Erreur de connexion', error);
+        this.errorMessage = 'Identifiants invalides. Veuillez réessayer.';
       }
     });
   }
