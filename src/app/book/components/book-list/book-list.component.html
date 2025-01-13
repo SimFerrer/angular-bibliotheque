@@ -1,1 +1,21 @@
-<p>book-list works!</p>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste des livres</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let book of books">
+        <div class="card h-100">
+          <img [src]="book.cover" alt="" class="card-img-top" />
+          <div class="card-body">
+            <h2 class="card-title h5">{{ book.title }}</h2>
+            <p class="card-text"><strong>Status :</strong> {{ book.status | bookStatusLabel }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <app-pagination
+      [pagination]="pagination"
+      (pageChanged)="loadBooks($event)"
+      class="mt-4"
+    ></app-pagination>
+  </div>
+  

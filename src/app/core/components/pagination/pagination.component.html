@@ -1,0 +1,20 @@
+<nav *ngIf="pagination" class="d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{ 'disabled': !pagination.has_previous_page }">
+        <button class="page-link" (click)="changePage(pagination.current_page - 1)" [disabled]="!pagination.has_previous_page">
+          Précédent
+        </button>
+      </li>
+      
+      <li class="page-item disabled">
+        <span class="page-link">Page {{ pagination.current_page }} sur {{ pagination.total_pages }}</span>
+      </li>
+      
+      <li class="page-item" [ngClass]="{ 'disabled': !pagination.has_next_page }">
+        <button class="page-link" (click)="changePage(pagination.current_page + 1)" [disabled]="!pagination.has_next_page">
+          Suivant
+        </button>
+      </li>
+    </ul>
+  </nav>
+  
