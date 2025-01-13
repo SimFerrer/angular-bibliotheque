@@ -1,26 +1,32 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">Biblios</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/catalog">Catalogue</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Connexion</a>
-          </li>
-        </ul>
-      </div>
+        <a class="navbar-brand" routerLink="/">Biblios</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/catalog">Catalogue</a>
+                </li>
+                @if(!authenticated){
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/login">Connexion</a>
+                </li>
+                }
+                @else{
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/auteur">Auteur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/editeur">Éditeur</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" (click)="logout()">Déconnexion</button>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
