@@ -1,4 +1,5 @@
 import { Book } from "../../book/models/book.model";
+import { PagedResponse } from "../../core/models/response.model";
 
 export interface Author {
     id: number | null;
@@ -8,3 +9,5 @@ export interface Author {
     nationality: string | null;
     books: Book[];
   }
+
+  export type AuthorResponse = PagedResponse<Author>;

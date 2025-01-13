@@ -5,6 +5,8 @@ import { Pagination } from '../../../core/models/pagination.model';
 import { PaginationComponent } from '../../../core/components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
 import { BookStatusPipe } from '../../pipes/book-status.pipe';
+import { AuthService } from '../../../auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
@@ -12,7 +14,8 @@ import { BookStatusPipe } from '../../pipes/book-status.pipe';
   imports: [
     PaginationComponent,
     CommonModule,
-    BookStatusPipe
+    BookStatusPipe,
+    RouterLink
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
@@ -21,11 +24,13 @@ export class BookListComponent implements OnInit {
 
   books: Book[] = [];
   pagination: Pagination | null = null;
+  authenticated: boolean = false;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadBooks();
+    this.authenticated = this.authService.isAuthenticated();
   }
 
   loadBooks(page: number = 1): void {

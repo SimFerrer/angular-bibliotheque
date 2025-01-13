@@ -1,5 +1,5 @@
 import { Author } from "../../author/models/author.model";
-import { Pagination } from "../../core/models/pagination.model";
+import { PagedResponse } from "../../core/models/response.model";
 import { Editor } from "../../editor/models/editor.model";
 import { User } from "../../user/models/user.model";
 import { BookStatus } from "../enums/book-status.enum";
@@ -19,7 +19,4 @@ export interface Book {
   }
 
   
-export interface BookResponse {
-    items: Book[];
-    pagination: Pagination;
-  }
+  export type BookResponse = PagedResponse<Book>;

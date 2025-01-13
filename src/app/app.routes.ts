@@ -4,7 +4,11 @@ import { AuthGuard } from './auth/auth.guard';
 export const routes: Routes = [
     {
         path:'catalog',
-        loadComponent:()=> import('./book/components/book-list/book-list.component').then(m=>m.BookListComponent),
+        loadComponent:()=> import('./book/components/book-list/book-list.component').then(m=>m.BookListComponent)
+    },
+    {
+        path:'author',
+        loadComponent:()=> import('./author/components/author-list/author-list.component').then(m=>m.AuthorListComponent),
         canActivate:[AuthGuard]
     },
     {
