@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginationComponent } from '../../../core/components/pagination/pagination.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Editor } from '../../models/editor.model';
 import { Pagination } from '../../../core/models/pagination.model';
@@ -21,7 +21,7 @@ export class EditorListComponent implements OnInit {
   editors: Editor[] = [];
   pagination: Pagination | null = null;
 
-  constructor(private editorService :EditorService){}
+  constructor(private editorService: EditorService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadEditors();
@@ -34,6 +34,23 @@ export class EditorListComponent implements OnInit {
       console.log('Editors:', this.editors);
       console.log('Pagination:', this.pagination);
     });
+  }
+
+  deleteEditor(editorData: Editor) {
+    if (editorData.id) {
+      if (confirm(`Êtes-vous sûr de vouloir supprimer l'éditeur' "${editorData.name}" ?`)) {
+        this.editorService.deleteEditor(editorData.id).subscribe({
+          next: () => {
+            alert('Editeur supprimé avec succès.');
+            window.location.reload();
+          },
+          error: (err) => {
+            alert('Erreur de dans la suppression');
+          }
+        })
+      }
+    }
+
   }
 
 }

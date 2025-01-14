@@ -1,0 +1,28 @@
+<form [formGroup]="editorForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="container mt-4">
+
+        <div #formError class="alert alert-danger" role="alert" style="display: none;">
+            Formulaire invalide, vérifiez que tous les champs sont corrects.
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Nom</label>
+                <input #formStart id="name" type="text" class="form-control" formControlName="name"
+                    aria-describedby="error-name"
+                    [ngClass]="{'is-invalid': editorForm.get('name')?.touched && editorForm.get('name')?.invalid}" />
+                <div *ngIf="editorForm.get('name')?.hasError('required')" class="invalid-feedback" id="error-name" role="alert">
+                    Nom requis, maximum 255 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12 text-start">
+                <button type="submit" class="btn btn-primary">
+                    Soumettre
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
