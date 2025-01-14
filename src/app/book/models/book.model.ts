@@ -13,8 +13,8 @@ export interface Book {
     plot: string; 
     pageNumber: number;
     status: BookStatus; 
-    editor: Editor | null; 
-    authors: Author[];
+    editor: Editor ; 
+    authors: Author[] ;
     createdBy: User | null;
   }
 

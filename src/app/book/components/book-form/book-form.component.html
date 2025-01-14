@@ -1,0 +1,108 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="container mt-4">
+
+        <div #formError class="alert alert-danger" role="alert" style="display: none;">
+            Formulaire invalide, vérifiez que tous les champs sont corrects.
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="title" class="form-label">Titre</label>
+                <input #formStart id="title" type="text" class="form-control" formControlName="title"
+                    aria-describedby="error-title"
+                    [ngClass]="{'is-invalid': bookForm.get('title')?.touched && bookForm.get('title')?.invalid}" />
+                <div class="invalid-feedback" id="error-title" role="alert">
+                    Titre requis, maximum 255 caractères.
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input id="isbn" type="text" class="form-control" formControlName="isbn" aria-describedby="error-isbn"
+                    [ngClass]="{'is-invalid': bookForm.get('isbn')?.touched && bookForm.get('isbn')?.invalid}" />
+                <div class="invalid-feedback" id="error-isbn" role="alert">
+                    ISBN valide requis (10 ou 13 chiffres).
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="cover" class="form-label">Couverture (URL)</label>
+                <input id="cover" type="text" class="form-control" formControlName="cover"
+                    aria-describedby="error-cover"
+                    [ngClass]="{'is-invalid': bookForm.get('cover')?.touched && bookForm.get('cover')?.invalid}" />
+                <div class="invalid-feedback" id="error-cover" role="alert">
+                    Une URL valide est requise pour la couverture.
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="plot" class="form-label">Résumé</label>
+                <textarea id="plot" class="form-control" formControlName="plot" rows="3" aria-describedby="error-plot"
+                    [ngClass]="{'is-invalid': bookForm.get('plot')?.touched && bookForm.get('plot')?.invalid}"></textarea>
+                <div class="invalid-feedback" id="error-plot" role="alert">
+                    Résumé requis, minimum 20 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="pageNumber" class="form-label">Nombre de Pages</label>
+                <input id="pageNumber" type="number" class="form-control" formControlName="pageNumber"
+                    aria-describedby="error-pageNumber"
+                    [ngClass]="{'is-invalid': bookForm.get('pageNumber')?.touched && bookForm.get('pageNumber')?.invalid}" />
+                <div class="invalid-feedback" id="error-pageNumber" role="alert">
+                    Nombre de pages requis (minimum 1).
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="status" class="form-label">Statut</label>
+                <select id="status" class="form-select" formControlName="status" aria-describedby="error-status"
+                    [ngClass]="{'is-invalid': bookForm.get('status')?.touched && bookForm.get('status')?.invalid}">
+                    <option value="" disabled>Choisissez un statut</option>
+                    <option *ngFor="let status of bookStatuses" [value]="status.value">{{ status.label }}</option>
+                </select>
+                <div class="invalid-feedback" id="error-status" role="alert">
+                    Le statut est requis.
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="editor" class="form-label">Éditeur</label>
+                <select id="editor" class="form-select" formControlName="editor" aria-describedby="error-editor"
+                    [ngClass]="{'is-invalid': bookForm.get('editor')?.touched && bookForm.get('editor')?.invalid}">
+                    <option value="" disabled>Choisissez un éditeur</option>
+                    <option *ngFor="let editor of editors" [value]="editor.id">{{ editor.name }}</option>
+                </select>
+                <div class="invalid-feedback" id="error-editor" role="alert">
+                    L'éditeur est requis.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label for="authors" class="form-label">Auteurs</label>
+                <select id="authors" class="form-select" formControlName="authors" aria-describedby="error-authors"
+                    multiple
+                    [ngClass]="{'is-invalid': bookForm.get('authors')?.touched && bookForm.get('authors')?.invalid}">
+                    <option *ngFor="let author of authors" [value]="author.id">{{ author.name }}</option>
+                </select>
+                <div class="invalid-feedback" id="error-authors" role="alert">
+                    Au moins un auteur est requis.
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12 text-start">
+                <button type="submit" class="btn btn-primary">
+                    Soumettre
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

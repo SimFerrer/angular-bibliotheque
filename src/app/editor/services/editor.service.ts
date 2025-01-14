@@ -13,7 +13,7 @@ export class EditorService {
 
     constructor(private http: HttpClient){}
 
-    getAllEditors(page : number = 1): Observable <EditorResponse>{
+    getAllEditors(page : number = 0): Observable <EditorResponse>{
         return this.http.get<EditorResponse>(`${this.apiUrl}?page=${page}`);
     }
 }

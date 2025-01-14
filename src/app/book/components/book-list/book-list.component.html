@@ -1,5 +1,10 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Liste des livres</h1>
+    @if(isAuthenticated$ |async){
+        <a routerLink="/catalog/new" class="btn btn-primary my-3">
+            Ajouter un livre
+        </a>
+    }
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         <div class="col" *ngFor="let book of books">
             <div class="card h-100">
@@ -7,11 +12,9 @@
                 <div class="card-body">
                     <h2 class="card-title h5">{{ book.title }}</h2>
                     <p class="card-text"><strong>Status :</strong> {{ book.status | bookStatusLabel }}</p>
-                    @if(isAuthenticated$ | async){
                     <a [routerLink]="['/catalog', book.id]" class="btn btn-primary mt-3">
                         Voir le détail
                     </a>
-                    }
                 </div>
             </div>
         </div>

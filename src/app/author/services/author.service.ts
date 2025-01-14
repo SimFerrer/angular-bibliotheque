@@ -13,7 +13,7 @@ export class AuthorService {
 
     constructor(private http: HttpClient){}
 
-    getAllAuthors(page : number = 1): Observable <AuthorResponse>{
+    getAllAuthors(page : number = 0): Observable <AuthorResponse>{
         return this.http.get<AuthorResponse>(`${this.apiUrl}?page=${page}`);
     }
 }
