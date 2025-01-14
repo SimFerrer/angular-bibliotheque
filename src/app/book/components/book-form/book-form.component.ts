@@ -75,7 +75,6 @@ export class BookFormComponent implements OnInit {
   }
 
   private loadBookData() {
-    console.log('hoy');
     this.bookService.getBookById(this.idBook).pipe(
       tap((book) => {
         console.log(book);
@@ -84,7 +83,6 @@ export class BookFormComponent implements OnInit {
           editor: book.editor?.id,
           authors: book.authors?.map((author: any) => author.id)
         });
-        console.log('hey');
       })
     ).subscribe();
   }
@@ -110,7 +108,6 @@ export class BookFormComponent implements OnInit {
         editor: null
       }
       this.saveBook(book, !!this.idBook);
-      console.log(book)
     } else {
       this.bookForm.markAllAsTouched();
       if (this.formError) {

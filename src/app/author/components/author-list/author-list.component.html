@@ -1,5 +1,8 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Liste des auteurs</h1>
+    <a routerLink="/author/new" class="btn btn-primary my-3">
+        Ajouter un auteur
+    </a>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         <div class="col" *ngFor="let author of authors">
             <div class="card h-100">

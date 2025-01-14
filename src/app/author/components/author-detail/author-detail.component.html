@@ -1,0 +1,41 @@
+<div class="container my-4">
+    <div class="card shadow">
+        <div class="row g-0">
+            <!-- Vérifie si bookData est défini -->
+            @if(authorData){
+            <div class="col-md-12">
+                <div class="card-body">
+                    <h1 class="card-title h4">{{ authorData.name }}</h1>
+                    <p class="card-text"><strong>Nationalité:</strong> {{ authorData.nationality }}</p>
+                    <p class="card-text"><strong>Date de naissance :</strong> {{ authorData.dateOfBirth| date }}</p>
+                    @if( authorData.dateOfDeath){
+                    <p class="card-text"><strong>Date de naissance :</strong> {{ authorData.dateOfDeath| date }}</p>
+                    }
+
+                    <p class="card-text">
+                        <strong>Livres :</strong>
+                        @if(authorData.books.length > 0){
+                    <ul>
+                        @for (book of authorData.books; track book.id) {
+                        <li>{{ book.title }}</li>
+                        }
+                    </ul>
+                    }
+                    @else{
+                    <span>Inconnu</span>
+                    }
+                    </p>
+                    <div class="mt-3">
+                        <a class="btn btn-primary me-2" [routerLink]="['/author/edit', authorData.id]">
+                            Éditer
+                        </a>
+                        <button class="btn btn-danger" (click)="deleteAuthor()">
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
