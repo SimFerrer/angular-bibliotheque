@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Pagination } from '../../../core/models/pagination.model';
 import { Author } from '../../models/author.model';
 import { AuthorService } from '../../services/author.service';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-author-list',
@@ -22,19 +22,23 @@ export class AuthorListComponent implements OnInit {
   authors: Author[] = [];
   pagination: Pagination | null = null;
 
-  constructor (private authorService: AuthorService){}
+  constructor(private route: ActivatedRoute, private router: Router, private authorService: AuthorService) { }
 
 
   ngOnInit(): void {
-    this.loadAuthors();
+    this.route.data.subscribe((data) => {
+      const resolvedData = data['authorsData'];
+      if (resolvedData) {
+        this.authors = resolvedData.items;
+        this.pagination = resolvedData.pagination;
+      }
+    })
   }
 
   loadAuthors(page: number = 1): void {
-    this.authorService.getAllAuthors(page).subscribe((response) => {
-      this.authors = response.items;
-      this.pagination = response.pagination;
-      console.log('Authors:', this.authors);
-      console.log('Pagination:', this.pagination);
+    this.router.navigate([], {
+      queryParams: { page },
+      queryParamsHandling: 'merge',
     });
   }
 }

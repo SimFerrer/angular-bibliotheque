@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
+import { AuthorListResolver } from './resolvers/author-list.resolver';
 
 export const authorRoutes: Routes = [
     {
@@ -20,6 +21,8 @@ export const authorRoutes: Routes = [
     {
         path:'author',
         loadComponent:()=> import('./components/author-list/author-list.component').then(m=>m.AuthorListComponent),
-        canActivate:[AuthGuard]
+        canActivate:[AuthGuard],
+        resolve: {authorsData:AuthorListResolver},
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange'
     },
   ];

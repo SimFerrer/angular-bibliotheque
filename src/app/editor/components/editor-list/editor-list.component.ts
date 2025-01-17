@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginationComponent } from '../../../core/components/pagination/pagination.component';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Editor } from '../../models/editor.model';
 import { Pagination } from '../../../core/models/pagination.model';
@@ -21,18 +21,22 @@ export class EditorListComponent implements OnInit {
   editors: Editor[] = [];
   pagination: Pagination | null = null;
 
-  constructor(private editorService: EditorService, private router: Router) { }
+  constructor(private editorService: EditorService,private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadEditors();
+    this.route.data.subscribe((data) => {
+      const resolvedData = data['editorsData'];
+      if (resolvedData) {
+        this.editors = resolvedData.items;
+        this.pagination = resolvedData.pagination;
+      }
+    });
   }
 
   loadEditors(page: number = 1): void {
-    this.editorService.getAllEditors(page).subscribe((response) => {
-      this.editors = response.items;
-      this.pagination = response.pagination;
-      console.log('Editors:', this.editors);
-      console.log('Pagination:', this.pagination);
+    this.router.navigate([], {
+      queryParams: { page },
+      queryParamsHandling: 'merge', 
     });
   }
 

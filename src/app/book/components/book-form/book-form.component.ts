@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BookStatus, BookStatusLabels } from '../../enums/book-status.enum';
 import { AuthorService } from '../../../author/services/author.service';
@@ -32,6 +32,7 @@ export class BookFormComponent implements OnInit {
 
   bookForm!: FormGroup;
 
+  book!: Book;
   editors: Editor[] = [];
   authors: Author[] = [];
 
@@ -46,30 +47,40 @@ export class BookFormComponent implements OnInit {
     private authorService: AuthorService,
     private editorService: EditorService,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.loadAuthorsAndEditors();
-    this.loadForm();
+
+    this.route.data.subscribe((data)=>{
+      const resolvedData = data['bookData'];
+      if(resolvedData){
+        this.book = resolvedData.book;
+        this.authors = resolvedData.authors;
+        this.editors = resolvedData.editors;
+      }
+      
+    this.loadForm(this.book);
+    });
 
 
   }
 
-  private loadForm(): void {
+  private loadForm(book : Book |null): void {
 
     this.bookForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(255)]],
-      isbn: ['', [Validators.required, Validators.pattern(/^(?:\d{10}|\d{13})$/)]],
-      cover: ['', [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[^\s]+/)]],
-      plot: ['', [Validators.required, Validators.minLength(20)]],
-      pageNumber: ['', [Validators.required, Validators.min(1)]],
-      status: ['', Validators.required],
-      editor: [null, Validators.required],
-      authors: [[], [Validators.required, Validators.minLength(1)]],
+      title: [book?.title, [Validators.required, Validators.maxLength(255)]],
+      isbn: [book?.isbn, [Validators.required, Validators.pattern(/^(?:\d{10}|\d{13})$/)]],
+      cover: [book?.cover, [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[^\s]+/)]],
+      plot: [book?.plot, [Validators.required, Validators.minLength(20)]],
+      pageNumber: [book?.pageNumber, [Validators.required, Validators.min(1)]],
+      status: [book?.status, Validators.required],
+      editor: [book?.editor?.id, Validators.required],
+      authors: [book?.authors?.map((author: Author) => author.id) || [], [Validators.required, Validators.minLength(1)]],
     })
 
     if (this.idBook) {
-      this.loadBookData();
+      //this.loadBookData();
     }
 
   }
@@ -87,7 +98,7 @@ export class BookFormComponent implements OnInit {
     ).subscribe();
   }
 
-  private loadAuthorsAndEditors(): void {
+  /*private loadAuthorsAndEditors(): void {
     this.authorService.getAllAuthors().subscribe(authors => {
       this.authors = authors.items;
     });
@@ -95,7 +106,7 @@ export class BookFormComponent implements OnInit {
     this.editorService.getAllEditors().subscribe(editors => {
       this.editors = editors.items;
     });
-  }
+  }*/
 
   onSubmit() {
     if (this.formError) this.formError.nativeElement.style.display = 'none';

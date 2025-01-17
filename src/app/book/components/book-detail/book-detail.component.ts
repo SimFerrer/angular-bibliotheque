@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookStatusPipe } from '../../pipes/book-status.pipe';
@@ -27,18 +27,18 @@ export class BookDetailComponent implements OnInit {
 
   isAuthenticated$! : Observable<boolean>;
 
-  constructor(private authService : AuthService,private bookService: BookService, private router :Router) { }
+  constructor(private route: ActivatedRoute,private authService : AuthService,private bookService: BookService, private router :Router) { }
 
   ngOnInit(): void {
-    this.loadBook();
+    this.route.data.subscribe((data)=>{
+      const resolvedData = data['bookData'];
+      if(resolvedData){
+        this.bookData = resolvedData.book;
+      }
+    })
     this.isAuthenticated$ = this.authService.isAuthenticated();
   }
 
-  private loadBook(): void {
-    this.bookService.getBookById(this.idBook).subscribe(
-      (book) => this.bookData = book
-    );
-  }
 
   deleteBook() {
     if (this.bookData.id) {

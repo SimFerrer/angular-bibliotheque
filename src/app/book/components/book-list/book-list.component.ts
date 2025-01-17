@@ -42,7 +42,6 @@ export class BookListComponent implements OnInit {
   }
 
   loadBooks(page: number = 1): void {
-    console.log('navigate')
     this.router.navigate([], {
       queryParams: { page },
       queryParamsHandling: 'merge', 
