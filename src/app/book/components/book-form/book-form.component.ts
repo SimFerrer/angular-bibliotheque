@@ -79,10 +79,6 @@ export class BookFormComponent implements OnInit {
       authors: [book?.authors?.map((author: Author) => author.id) || [], [Validators.required, Validators.minLength(1)]],
     })
 
-    if (this.idBook) {
-      //this.loadBookData();
-    }
-
   }
 
   private loadBookData() {
@@ -98,15 +94,6 @@ export class BookFormComponent implements OnInit {
     ).subscribe();
   }
 
-  /*private loadAuthorsAndEditors(): void {
-    this.authorService.getAllAuthors().subscribe(authors => {
-      this.authors = authors.items;
-    });
-
-    this.editorService.getAllEditors().subscribe(editors => {
-      this.editors = editors.items;
-    });
-  }*/
 
   onSubmit() {
     if (this.formError) this.formError.nativeElement.style.display = 'none';
@@ -136,7 +123,7 @@ export class BookFormComponent implements OnInit {
       this.bookService.updateBook(book, parseInt(this.idBook)).subscribe({
         next: (book: Book) => {
           alert('Livre modifié avec succès.');
-          if (book.id) { // Assurez-vous que l'ID est présent
+          if (book.id) { 
             this.router.navigate(['/catalog', book.id]);
           } else {
             this.router.navigate(['/catalog']);
@@ -151,7 +138,7 @@ export class BookFormComponent implements OnInit {
       this.bookService.createBook(book).subscribe({
         next: (book: Book) => {
           alert('Livre ajouté avec succès.');
-          if (book.id) { // Assurez-vous que l'ID est présent
+          if (book.id) { 
             this.router.navigate(['/catalog', book.id]);
           } else {
             this.router.navigate(['/catalog']);
