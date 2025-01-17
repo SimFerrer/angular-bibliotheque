@@ -1,6 +1,7 @@
 // src/app/book/book.routes.ts
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
+import { BookListResolver } from './resolvers/book-list.resolver';
 
 export const bookRoutes: Routes = [
     
@@ -20,6 +21,8 @@ export const bookRoutes: Routes = [
     },
     {
         path: 'catalog',
-        loadComponent: () => import('./components/book-list/book-list.component').then(m => m.BookListComponent)
+        loadComponent: () => import('./components/book-list/book-list.component').then(m => m.BookListComponent),
+        resolve: {booksData:BookListResolver},
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange'
     },
 ];

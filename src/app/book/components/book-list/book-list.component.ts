@@ -6,7 +6,7 @@ import { PaginationComponent } from '../../../core/components/pagination/paginat
 import { CommonModule } from '@angular/common';
 import { BookStatusPipe } from '../../pipes/book-status.pipe';
 import { AuthService } from '../../../auth/services/auth.service';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -25,21 +25,28 @@ export class BookListComponent implements OnInit {
 
   books: Book[] = [];
   pagination: Pagination | null = null;
-  isAuthenticated$! :Observable<boolean>;
+  isAuthenticated$!: Observable<boolean>;
 
-  constructor(private bookService: BookService, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.loadBooks();
+    
     this.isAuthenticated$ = this.authService.isAuthenticated();
+    this.route.data.subscribe((data) => {
+      const resolvedData = data['booksData'];
+      if (resolvedData) {
+        this.books = resolvedData.items;
+        this.pagination = resolvedData.pagination;
+      }
+    });
   }
 
   loadBooks(page: number = 1): void {
-    this.bookService.getAllBooks(page).subscribe((response) => {
-      this.books = response.items;
-      this.pagination = response.pagination;
-      console.log('Books:', this.books);
-      console.log('Pagination:', this.pagination);
+    console.log('navigate')
+    this.router.navigate([], {
+      queryParams: { page },
+      queryParamsHandling: 'merge', 
     });
+
   }
 }
