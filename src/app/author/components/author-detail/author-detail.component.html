@@ -16,7 +16,7 @@
                         <strong>Livres :</strong>
                         @if(authorData.books.length > 0){
                     <ul>
-                        @for (book of authorData.books; track book.id) {
+                        @for (book of authorData.books; track book.title) {
                         <li>{{ book.title }}</li>
                         }
                     </ul>
