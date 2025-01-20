@@ -25,14 +25,14 @@ export class BookDetailComponent implements OnInit {
   @Input() idBook: string = "";
   bookData !: Book;
 
-  isAuthenticated$! : Observable<boolean>;
+  isAuthenticated$!: Observable<boolean>;
 
-  constructor(private route: ActivatedRoute,private authService : AuthService,private bookService: BookService, private router :Router) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private bookService: BookService, private router: Router) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data)=>{
+    this.route.data.subscribe((data) => {
       const resolvedData = data['bookData'];
-      if(resolvedData){
+      if (resolvedData) {
         this.bookData = resolvedData.book;
       }
     })
@@ -43,7 +43,7 @@ export class BookDetailComponent implements OnInit {
   deleteBook() {
     if (this.bookData.id) {
       if (confirm(`Êtes-vous sûr de vouloir supprimer le livre "${this.bookData.title}" ?`)) {
-        this.bookService.deleteBook(this.bookData.id).subscribe({
+        this.bookService.delete(this.bookData.id).subscribe({
           next: () => {
             alert('Livre supprimé avec succès.');
             this.router.navigate(['/catalog'])

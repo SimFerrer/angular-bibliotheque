@@ -10,7 +10,7 @@ import { EditorService } from "../services/editor.service";
 @Injectable({
     providedIn: 'root'
 })
-export class EditorListResolver implements Resolve<{ items: Editor[], pagination: any } | null>{
+export class EditorListResolver implements Resolve<{ items: Editor[], pagination: any } | null> {
     constructor(private editorService: EditorService,
         private errorHandler: ErrorHandlerService) { }
 
@@ -19,7 +19,7 @@ export class EditorListResolver implements Resolve<{ items: Editor[], pagination
         state: RouterStateSnapshot
     ): Observable<{ items: Editor[]; pagination: any } | null> {
         const page = route.queryParamMap.get('page') ? Number(route.queryParamMap.get('page')) : 1;
-        return this.editorService.getAllEditors(page).pipe(
+        return this.editorService.getAll(page).pipe(
             catchError((error) => this.errorHandler.handleError<{ items: Editor[]; pagination: any }>(error, state.url))
         );
     }

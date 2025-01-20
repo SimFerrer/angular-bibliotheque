@@ -9,7 +9,7 @@ import { ErrorHandlerService } from "../../core/services/error-handler.service";
 @Injectable({
     providedIn: 'root'
 })
-export class BookListResolver implements Resolve<{ items: Book[], pagination: any } | null>{
+export class BookListResolver implements Resolve<{ items: Book[], pagination: any } | null> {
     constructor(private bookService: BookService,
         private errorHandler: ErrorHandlerService) { }
 
@@ -18,7 +18,7 @@ export class BookListResolver implements Resolve<{ items: Book[], pagination: an
         state: RouterStateSnapshot
     ): Observable<{ items: Book[]; pagination: any } | null> {
         const page = route.queryParamMap.get('page') ? Number(route.queryParamMap.get('page')) : 1;
-        return this.bookService.getAllBooks(page).pipe(
+        return this.bookService.getAll(page).pipe(
             catchError((error) => this.errorHandler.handleError<{ items: Book[]; pagination: any }>(error, state.url))
         );
     }

@@ -15,19 +15,19 @@ import { AuthorService } from '../../services/author.service';
   templateUrl: './author-detail.component.html',
   styleUrl: './author-detail.component.scss'
 })
-export class AuthorDetailComponent implements OnInit{
+export class AuthorDetailComponent implements OnInit {
 
   @Input() idAuthor: string = "";
   authorData !: Author;
 
-  constructor(private authorService: AuthorService, private router :Router) { }
+  constructor(private authorService: AuthorService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadAuthor();
   }
 
   private loadAuthor(): void {
-    this.authorService.getAuthorById(this.idAuthor).subscribe(
+    this.authorService.getById(this.idAuthor).subscribe(
       (author) => this.authorData = author
     );
   }
@@ -35,7 +35,7 @@ export class AuthorDetailComponent implements OnInit{
   deleteAuthor() {
     if (this.authorData.id) {
       if (confirm(`Êtes-vous sûr de vouloir supprimer l'auteur' "${this.authorData.name}" ?`)) {
-        this.authorService.deleteAuthor(this.authorData.id).subscribe({
+        this.authorService.delete(this.authorData.id).subscribe({
           next: () => {
             alert('Auteur supprimé avec succès.');
             this.router.navigate(['/catalog'])

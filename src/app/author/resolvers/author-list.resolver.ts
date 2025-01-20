@@ -9,7 +9,7 @@ import { AuthorService } from "../services/author.service";
 @Injectable({
     providedIn: 'root'
 })
-export class AuthorListResolver implements Resolve<{ items: Author[], pagination: any } | null>{
+export class AuthorListResolver implements Resolve<{ items: Author[], pagination: any } | null> {
     constructor(private authorService: AuthorService,
         private errorHandler: ErrorHandlerService) { }
 
@@ -18,7 +18,7 @@ export class AuthorListResolver implements Resolve<{ items: Author[], pagination
         state: RouterStateSnapshot
     ): Observable<{ items: Author[]; pagination: any } | null> {
         const page = route.queryParamMap.get('page') ? Number(route.queryParamMap.get('page')) : 1;
-        return this.authorService.getAllAuthors(page).pipe(
+        return this.authorService.getAll(page).pipe(
             catchError((error) => this.errorHandler.handleError<{ items: Author[]; pagination: any }>(error, state.url))
         );
     }

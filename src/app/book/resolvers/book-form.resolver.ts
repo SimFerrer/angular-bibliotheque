@@ -15,15 +15,15 @@ import { Editor } from "../../editor/models/editor.model";
 })
 export class BookFormResolver implements Resolve<{
     book: Book | null;
-    authors: Author[]; 
-    editors: Editor[]; 
+    authors: Author[];
+    editors: Editor[];
 }> {
     constructor(
         private bookService: BookService,
         private authorService: AuthorService,
         private editorService: EditorService,
         private errorHandler: ErrorHandlerService
-    ) {}
+    ) { }
 
     resolve(
         route: ActivatedRouteSnapshot,
@@ -31,13 +31,13 @@ export class BookFormResolver implements Resolve<{
     ): Observable<{ book: Book | null; authors: Author[]; editors: Editor[] }> {
         const idBook = route.paramMap.get('idBook');
 
-        const book$ = idBook 
-            ? this.bookService.getBookById(idBook).pipe(
+        const book$ = idBook
+            ? this.bookService.getById(idBook).pipe(
                 catchError((error) => this.errorHandler.handleError<Book>(error, state.url))
-              )
+            )
             : of(null);
 
-        const authors$ = this.authorService.getAllAuthors().pipe(
+        const authors$ = this.authorService.getAll().pipe(
             map((response) => response.items || []),
             catchError((error) => {
                 this.errorHandler.handleError<Author[]>(error, state.url)
@@ -45,8 +45,8 @@ export class BookFormResolver implements Resolve<{
             })
         );
 
-        const editors$ = this.editorService.getAllEditors().pipe(
-            map((response) => response.items || []),  
+        const editors$ = this.editorService.getAll().pipe(
+            map((response) => response.items || []),
             catchError((error) => {
                 this.errorHandler.handleError<Editor[]>(error, state.url)
                 return of([]);

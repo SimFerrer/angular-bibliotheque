@@ -9,7 +9,7 @@ import { ErrorHandlerService } from "../../core/services/error-handler.service";
 @Injectable({
     providedIn: 'root'
 })
-export class BookDetailResolver implements Resolve<{ book: Book } | null>{
+export class BookDetailResolver implements Resolve<{ book: Book } | null> {
     constructor(private bookService: BookService,
         private errorHandler: ErrorHandlerService) { }
 
@@ -19,7 +19,7 @@ export class BookDetailResolver implements Resolve<{ book: Book } | null>{
     ): Observable<{ book: Book } | null> {
         const idBook = route.paramMap.get('idBook');
         if (idBook) {
-            return this.bookService.getBookById(idBook).pipe(
+            return this.bookService.getById(idBook).pipe(
                 map(book => ({ book })),
                 catchError((error) => this.errorHandler.handleError<{ book: Book }>(error, state.url))
             );

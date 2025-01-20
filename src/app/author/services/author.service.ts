@@ -3,23 +3,21 @@ import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { Author, AuthorResponse } from "../models/author.model";
 import { formatDate } from "@angular/common";
+import { BaseCrudService } from "../../core/services/baseCrud.service";
 
 @Injectable(
     {
         providedIn: 'root'
     }
 )
-export class AuthorService {
-    private apiUrl = `http://localhost:8000/api/author`;
+export class AuthorService extends BaseCrudService<Author, AuthorResponse> {
 
-    constructor(private http: HttpClient) { }
-
-    getAllAuthors(page: number = 0): Observable<AuthorResponse> {
-        return this.http.get<AuthorResponse>(`${this.apiUrl}?page=${page}`);
+    constructor(http: HttpClient) {
+        super(http, 'http://localhost:8000/api/author')
     }
 
-    getAuthorById(id: string): Observable<Author> {
-        return this.http.get<Author>(`${this.apiUrl}/${id}`).pipe(
+    override getById(id: string): Observable<Author> {
+        return super.getById(id).pipe(
             map(author => {
                 author.dateOfBirth = formatDate(author.dateOfBirth, 'YYYY-MM-dd', 'en-US');
                 if (author.dateOfDeath)
@@ -30,19 +28,4 @@ export class AuthorService {
         );
     }
 
-    deleteAuthor(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${id}`);
-    }
-
-    createAuthor(author: Author): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/create`, author);
-    }
-
-    updateAuthor(author: Author, idAuthor: number): Observable<any> {
-
-        return this.http.put<any>(`${this.apiUrl}/edit`, {
-            ...author,
-            id: idAuthor
-        });
-    }
 }

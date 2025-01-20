@@ -21,7 +21,7 @@ export class EditorListComponent implements OnInit {
   editors: Editor[] = [];
   pagination: Pagination | null = null;
 
-  constructor(private editorService: EditorService,private route: ActivatedRoute, private router: Router) { }
+  constructor(private editorService: EditorService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
@@ -36,14 +36,14 @@ export class EditorListComponent implements OnInit {
   loadEditors(page: number = 1): void {
     this.router.navigate([], {
       queryParams: { page },
-      queryParamsHandling: 'merge', 
+      queryParamsHandling: 'merge',
     });
   }
 
   deleteEditor(editorData: Editor) {
     if (editorData.id) {
       if (confirm(`Êtes-vous sûr de vouloir supprimer l'éditeur' "${editorData.name}" ?`)) {
-        this.editorService.deleteEditor(editorData.id).subscribe({
+        this.editorService.delete(editorData.id).subscribe({
           next: () => {
             alert('Editeur supprimé avec succès.');
             window.location.reload();

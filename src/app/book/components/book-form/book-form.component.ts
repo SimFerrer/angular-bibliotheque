@@ -52,21 +52,21 @@ export class BookFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.data.subscribe((data)=>{
+    this.route.data.subscribe((data) => {
       const resolvedData = data['bookData'];
-      if(resolvedData){
+      if (resolvedData) {
         this.book = resolvedData.book;
         this.authors = resolvedData.authors;
         this.editors = resolvedData.editors;
       }
-      
-    this.loadForm(this.book);
+
+      this.loadForm(this.book);
     });
 
 
   }
 
-  private loadForm(book : Book |null): void {
+  private loadForm(book: Book | null): void {
 
     this.bookForm = this.fb.group({
       title: [book?.title, [Validators.required, Validators.maxLength(255)]],
@@ -82,7 +82,7 @@ export class BookFormComponent implements OnInit {
   }
 
   private loadBookData() {
-    this.bookService.getBookById(this.idBook).pipe(
+    this.bookService.getById(this.idBook).pipe(
       tap((book) => {
         console.log(book);
         this.bookForm.patchValue({
@@ -120,10 +120,10 @@ export class BookFormComponent implements OnInit {
 
   private saveBook(book: Book, isUpdate: boolean): void {
     if (isUpdate) {
-      this.bookService.updateBook(book, parseInt(this.idBook)).subscribe({
+      this.bookService.update(book, parseInt(this.idBook)).subscribe({
         next: (book: Book) => {
           alert('Livre modifié avec succès.');
-          if (book.id) { 
+          if (book.id) {
             this.router.navigate(['/catalog', book.id]);
           } else {
             this.router.navigate(['/catalog']);
@@ -135,10 +135,10 @@ export class BookFormComponent implements OnInit {
       });
     }
     else {
-      this.bookService.createBook(book).subscribe({
+      this.bookService.create(book).subscribe({
         next: (book: Book) => {
           alert('Livre ajouté avec succès.');
-          if (book.id) { 
+          if (book.id) {
             this.router.navigate(['/catalog', book.id]);
           } else {
             this.router.navigate(['/catalog']);

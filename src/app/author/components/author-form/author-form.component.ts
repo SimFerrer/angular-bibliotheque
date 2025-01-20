@@ -46,9 +46,9 @@ export class AuthorFormComponent implements OnInit {
         validators: this.dateRangeValidator
       })
 
-      if(this.idAuthor){
-        this.loadAuthorData();
-      }
+    if (this.idAuthor) {
+      this.loadAuthorData();
+    }
   }
 
   private dateRangeValidator(group: AbstractControl): { [key: string]: any } | null {
@@ -62,7 +62,7 @@ export class AuthorFormComponent implements OnInit {
   }
 
   private loadAuthorData() {
-    this.authorService.getAuthorById(this.idAuthor).pipe(
+    this.authorService.getById(this.idAuthor).pipe(
       tap((author) => {
         console.log(author);
         this.authorForm.patchValue({
@@ -76,7 +76,7 @@ export class AuthorFormComponent implements OnInit {
     if (this.formError) this.formError.nativeElement.style.display = 'none';
     if (this.authorForm.valid) {
       console.log(this.authorForm.value)
-      let author : Author = {
+      let author: Author = {
         ...this.authorForm.value
       }
       this.saveAuthor(author, !!this.idAuthor);
@@ -94,7 +94,7 @@ export class AuthorFormComponent implements OnInit {
 
   private saveAuthor(author: Author, isUpdate: boolean): void {
     if (isUpdate) {
-      this.authorService.updateAuthor(author, parseInt(this.idAuthor)).subscribe({
+      this.authorService.update(author, parseInt(this.idAuthor)).subscribe({
         next: (author: Author) => {
           alert('Auteur modifié avec succès.');
           if (author.id) { // Assurez-vous que l'ID est présent
@@ -109,7 +109,7 @@ export class AuthorFormComponent implements OnInit {
       });
     }
     else {
-      this.authorService.createAuthor(author).subscribe({
+      this.authorService.create(author).subscribe({
         next: (author: Author) => {
           alert('Auteur ajouté avec succès.');
           if (author.id) { // Assurez-vous que l'ID est présent

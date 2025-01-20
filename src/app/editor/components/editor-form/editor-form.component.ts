@@ -47,7 +47,7 @@ export class EditorFormComponent implements OnInit {
 
   private loadEditorData(): void {
 
-    this.editorService.getEditorById(this.idEditor).pipe(
+    this.editorService.getById(this.idEditor).pipe(
       tap((editor) => {
         this.editorForm.patchValue(editor)
       })
@@ -76,7 +76,7 @@ export class EditorFormComponent implements OnInit {
 
   private saveEditor(editor: Editor, isUpdate: boolean): void {
     if (isUpdate) {
-      this.editorService.updateEditor(editor, parseInt(this.idEditor)).subscribe({
+      this.editorService.update(editor, parseInt(this.idEditor)).subscribe({
         next: (editor: Editor) => {
           alert('Editeur modifié avec succès.');
           this.router.navigate(['/editor']);
@@ -87,7 +87,7 @@ export class EditorFormComponent implements OnInit {
       });
     }
     else {
-      this.editorService.createEditor(editor).subscribe({
+      this.editorService.create(editor).subscribe({
         next: (editor: Editor) => {
           alert('Editor ajouté avec succès.');
           this.router.navigate(['/editor']);
