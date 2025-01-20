@@ -35,7 +35,7 @@ export class BookService {
 
         return this.http.put<any>(`${this.apiUrl}/edit`, {
             ...book,
-            id : idBook
+            id: idBook
         });
     }
 

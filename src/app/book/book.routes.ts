@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { BookListResolver } from './resolvers/book-list.resolver';
 import { BookFormResolver } from './resolvers/book-form.resolver';
+import { BookDetailResolver } from './resolvers/book-detail.resolver';
 
 export const bookRoutes: Routes = [
 
@@ -15,7 +16,7 @@ export const bookRoutes: Routes = [
     {
         path: 'catalog/:idBook',
         loadComponent: () => import('./components/book-detail/book-detail.component').then(m => m.BookDetailComponent),
-        resolve: { bookData: BookFormResolver }
+        resolve: { bookData: BookDetailResolver }
     },
     {
         path: 'catalog/edit/:idBook',

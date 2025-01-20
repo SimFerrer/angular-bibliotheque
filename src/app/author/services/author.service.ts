@@ -24,7 +24,7 @@ export class AuthorService {
                 author.dateOfBirth = formatDate(author.dateOfBirth, 'YYYY-MM-dd', 'en-US');
                 if (author.dateOfDeath)
                     author.dateOfDeath = formatDate(author.dateOfDeath, 'YYYY-MM-dd', 'en-US');
-                    console.log(author.dateOfBirth)
+                console.log(author.dateOfBirth)
                 return author;
             })
         );
