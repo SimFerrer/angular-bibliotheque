@@ -37,7 +37,7 @@ export class AuthorFormComponent implements OnInit {
 
   private loadForm(): void {
     this.authorForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(255)]],
+      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
       dateOfBirth: ['', [Validators.required]],
       dateOfDeath: [''],
       nationality: ['', [Validators.required]],

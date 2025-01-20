@@ -10,8 +10,9 @@
                 <input #formStart id="title" type="text" class="form-control" formControlName="title"
                     aria-describedby="error-title"
                     [ngClass]="{'is-invalid': bookForm.get('title')?.touched && bookForm.get('title')?.invalid}" />
-                <div class="invalid-feedback" id="error-title" role="alert">
-                    Titre requis, maximum 255 caractères.
+                <div *ngIf="bookForm.get('title')?.hasError('required') || bookForm.get('title')?.hasError('minlength')"
+                    class="invalid-feedback" id="error-title" role="alert">
+                    Titre requis, minimum 10 caractères.
                 </div>
             </div>
 

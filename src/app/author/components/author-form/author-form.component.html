@@ -11,8 +11,9 @@
                 <input #formStart id="name" type="text" class="form-control" formControlName="name"
                     aria-describedby="error-name"
                     [ngClass]="{'is-invalid': authorForm.get('name')?.touched && authorForm.get('name')?.invalid}" />
-                <div *ngIf="authorForm.get('name')?.hasError('required')" class="invalid-feedback" id="error-name" role="alert">
-                    Nom requis, maximum 255 caractères.
+                <div *ngIf="authorForm.get('name')?.hasError('required') || authorForm.get('name')?.hasError('minlength') "
+                    class="invalid-feedback" id="error-name" role="alert">
+                    Nom requis, minimum 5 caractères.
                 </div>
             </div>
 
@@ -21,7 +22,8 @@
                 <input id="nationality" type="text" class="form-control" formControlName="nationality"
                     aria-describedby="error-nationality"
                     [ngClass]="{'is-invalid': authorForm.get('nationality')?.touched && authorForm.get('nationality')?.invalid}" />
-                <div *ngIf="authorForm.get('nationality')?.hasError('required')" class="invalid-feedback" id="error-nationality" role="alert">
+                <div *ngIf="authorForm.get('nationality')?.hasError('required')" class="invalid-feedback"
+                    id="error-nationality" role="alert">
                     Nationalité requise.
                 </div>
             </div>
@@ -33,7 +35,8 @@
                 <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth"
                     aria-describedby="error-dateOfBirth"
                     [ngClass]="{'is-invalid': authorForm.get('dateOfBirth')?.touched && authorForm.get('dateOfBirth')?.invalid}" />
-                <div *ngIf="authorForm.get('dateOfBirth')?.hasError('required')" class="invalid-feedback" id="error-dateOfBirth" role="alert">
+                <div *ngIf="authorForm.get('dateOfBirth')?.hasError('required')" class="invalid-feedback"
+                    id="error-dateOfBirth" role="alert">
                     Date de naissance requise.
                 </div>
             </div>

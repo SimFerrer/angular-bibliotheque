@@ -69,7 +69,7 @@ export class BookFormComponent implements OnInit {
   private loadForm(book: Book | null): void {
 
     this.bookForm = this.fb.group({
-      title: [book?.title, [Validators.required, Validators.maxLength(255)]],
+      title: [book?.title, [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
       isbn: [book?.isbn, [Validators.required, Validators.pattern(/^(?:\d{10}|\d{13})$/)]],
       cover: [book?.cover, [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[^\s]+/)]],
       plot: [book?.plot, [Validators.required, Validators.minLength(20)]],
