@@ -25,8 +25,8 @@ You can test the api with symfony project https://github.com/SimFerrer/symfony-b
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
-   cd <repo-name>
+   git clone https://github.com/SimFerrer/angular-bibliotheque.git
+   cd angular-bibliotheque
    ```
 
 2. Install dependencies:
